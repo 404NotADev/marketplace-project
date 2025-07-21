@@ -2,6 +2,11 @@ django
 djangorestframework
 psycopg2-binary
 python-decouple
+<<<<<<< HEAD
 celery
 redis
 drf-yasg
+=======
+djangorestframework-simplejwt
+
+>>>>>>> origin/master
