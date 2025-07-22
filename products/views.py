@@ -3,7 +3,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework.response import Response    
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+from .permissions import IsOwner
 from .models import Comment, Like, Favorite, ProductsModel
 from .serializer import ProductModelSerializer,CommentSerializer, FavoriteSerializer
 
@@ -11,6 +13,11 @@ from .serializer import ProductModelSerializer,CommentSerializer, FavoriteSerial
 class ProductViewSet(ModelViewSet):
     queryset = ProductsModel.objects.all()
     serializer_class = ProductModelSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwner]
+
+    def perform_create(self, serializer):
+        serializer.save(salesman=self.request.user)
+
 
 
 class CommentModelViewSet(ModelViewSet):
